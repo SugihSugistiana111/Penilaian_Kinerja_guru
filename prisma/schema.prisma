@@ -1,0 +1,152 @@
+// Prisma Schema untuk SPK Penilaian Kinerja Guru Metode MOORA
+// SMA Al-Ihsan Boarding School
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id        String   @id @default(cuid())
+  namaRole  String   @unique // ADMIN, KEPALA_SEKOLAH, GURU
+  users     User[]
+}
+
+model User {
+  id        String         @id @default(cuid())
+  nama      String
+  username  String         @unique
+  password  String
+  roleId    String
+  role      Role           @relation(fields: [roleId], references: [id])
+  guruId    String?        @unique
+  guru      Guru?          @relation(fields: [guruId], references: [id])
+  status    Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  logs      LogAktivitas[]
+}
+
+model Guru {
+  id                   String         @id @default(cuid())
+  nip                  String         @unique
+  nama                 String
+  jenisKelamin         String         // L | P
+  jabatanTugasMengajar String
+  tugasTambahanUtama   String?
+  tugasTambahanLain    String?
+  jumlahSiswaPerRombel Int            @default(0)
+  jumlahJamAjar        Int            @default(0)
+  mengajarKelas10      Boolean        @default(false)
+  mengajarKelas11      Boolean        @default(false)
+  mengajarKelas12      Boolean        @default(false)
+  statusAktif          Boolean        @default(true)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  user                 User?
+  penilaian            Penilaian[]
+  hasilMoora           HasilMoora[]
+}
+
+model Kriteria {
+  id              String            @id @default(cuid())
+  kode            String            @unique // C1, C2, C3, C4
+  nama            String
+  bobot           Float             // 0.35, 0.25, 0.25, 0.15
+  jenis           String            @default("BENEFIT") // BENEFIT | COST
+  status          Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  skala           SkalaPenilaian[]
+  detailPenilaian DetailPenilaian[]
+  detailMoora     DetailMoora[]
+}
+
+model SkalaPenilaian {
+  id          String    @id @default(cuid())
+  kriteriaId  String?
+  kriteria    Kriteria? @relation(fields: [kriteriaId], references: [id])
+  nilai       Int       // 1 - 5
+  label       String    // Sangat Kurang, Kurang, Cukup, Baik, Sangat Baik
+  keterangan  String?
+}
+
+model PeriodePenilaian {
+  id          String        @id @default(cuid())
+  bulan       String        // Januari, Februari, ..., Desember
+  tahun       Int           // e.g. 2026
+  namaPeriode String        // e.g. "Juni 2026"
+  status      String        @default("DRAFT") // DRAFT, AKTIF, SELESAI
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  penilaian   Penilaian[]
+  hasilMoora  HasilMoora[]
+}
+
+model Penilaian {
+  id          String            @id @default(cuid())
+  guruId      String
+  guru        Guru              @relation(fields: [guruId], references: [id], onDelete: Cascade)
+  periodeId   String
+  periode     PeriodePenilaian  @relation(fields: [periodeId], references: [id], onDelete: Cascade)
+  dinilaiOleh String?           // e.g. "Kepala Sekolah"
+  status      String            @default("SELESAI") // DRAFT, SELESAI
+  catatan     String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  details     DetailPenilaian[]
+
+  @@unique([guruId, periodeId])
+}
+
+model DetailPenilaian {
+  id          String    @id @default(cuid())
+  penilaianId String
+  penilaian   Penilaian @relation(fields: [penilaianId], references: [id], onDelete: Cascade)
+  kriteriaId  String
+  kriteria    Kriteria  @relation(fields: [kriteriaId], references: [id])
+  nilai       Float     // 1.0 - 5.0
+
+  @@unique([penilaianId, kriteriaId])
+}
+
+model HasilMoora {
+  id              String            @id @default(cuid())
+  guruId          String
+  guru            Guru              @relation(fields: [guruId], references: [id], onDelete: Cascade)
+  periodeId       String
+  periode         PeriodePenilaian  @relation(fields: [periodeId], references: [id], onDelete: Cascade)
+  nilaiPreferensi Float             // Nilai Yi optimasi MOORA
+  ranking         Int
+  createdAt       DateTime          @default(now())
+  details         DetailMoora[]
+
+  @@unique([guruId, periodeId])
+}
+
+model DetailMoora {
+  id               String     @id @default(cuid())
+  hasilMooraId     String
+  hasilMoora       HasilMoora @relation(fields: [hasilMooraId], references: [id], onDelete: Cascade)
+  kriteriaId       String
+  kriteria         Kriteria   @relation(fields: [kriteriaId], references: [id])
+  nilaiAwal        Float
+  nilaiNormalisasi Float
+  bobot            Float
+  nilaiTerbobot    Float
+}
+
+model LogAktivitas {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  aktivitas String
+  modul     String
+  dataId    String?
+  waktu     DateTime @default(now())
+  alamatIp  String?
+}

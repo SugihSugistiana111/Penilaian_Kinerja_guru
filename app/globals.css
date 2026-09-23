@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 120 20% 98%;
+    --foreground: 140 25% 18%;
+    --card: 0 0% 100%;
+    --card-foreground: 140 25% 18%;
+    --primary: 125 18% 60%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 120 15% 94%;
+    --muted-foreground: 135 7% 43%;
+    --border: 120 15% 88%;
+  }
+
+  body {
+    color: #26352A;
+    background-color: #F8FAF8;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* Custom Print Styles for official school report */
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .page-break {
+    page-break-after: always;
+  }
+}
+
+/* Smooth transitions */
+button, a, input, select {
+  transition: all 0.15s ease-in-out;
+}
