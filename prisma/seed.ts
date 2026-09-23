@@ -507,30 +507,30 @@ async function main() {
     });
   }
 
-  // 8. Periode Juni 2026 (AKTIF) - Berikan penilaian awal untuk 18 guru agar siap uji / demo
-  const rawScoresJuni: Array<{ guruIndex: number; c1: number; c2: number; c3: number; c4: number }> = [
-    { guruIndex: 0, c1: 5, c2: 5, c3: 5, c4: 5 }, // Ahmad Fauzi
-    { guruIndex: 1, c1: 5, c2: 5, c3: 5, c4: 5 }, // Siti Nurhaliza
-    { guruIndex: 2, c1: 5, c2: 4, c3: 5, c4: 4 }, // Budi Santoso
-    { guruIndex: 3, c1: 4, c2: 5, c3: 4, c4: 5 }, // Ratna Dewi
-    { guruIndex: 4, c1: 5, c2: 5, c3: 5, c4: 4 }, // Hendra Gunawan
-    { guruIndex: 5, c1: 4, c2: 5, c3: 4, c4: 4 }, // Dewi Sartika
-    { guruIndex: 6, c1: 5, c2: 5, c3: 5, c4: 5 }, // Muhammad Rizky
-    { guruIndex: 7, c1: 5, c2: 4, c3: 4, c4: 4 }, // Nurul Hidayah
-    { guruIndex: 8, c1: 4, c2: 5, c3: 4, c4: 4 }, // Agus Setiawan
-    { guruIndex: 9, c1: 4, c2: 4, c3: 4, c4: 4 }, // Eka Putri Rahayu
-    { guruIndex: 10, c1: 4, c2: 4, c3: 4, c4: 4 }, // Dedi Supriyadi
-    { guruIndex: 11, c1: 4, c2: 4, c3: 4, c4: 3 }, // Rina Marlina
-    { guruIndex: 12, c1: 5, c2: 4, c3: 5, c4: 4 }, // Fajar Nugroho
-    { guruIndex: 13, c1: 4, c2: 4, c3: 5, c4: 4 }, // Maya Anggraini
-    { guruIndex: 14, c1: 5, c2: 4, c3: 4, c4: 5 }, // Yusuf Habibi
-    { guruIndex: 15, c1: 5, c2: 5, c3: 4, c4: 5 }, // Fitriani
-    { guruIndex: 16, c1: 4, c2: 5, c3: 4, c4: 4 }, // Bambang Hermanto
-    { guruIndex: 17, c1: 5, c2: 5, c3: 4, c4: 5 }, // Dian Kusuma
+  // 8. Periode Juni 2026 (AKTIF) - Berikan penilaian awal untuk 18 guru sesuai Tabel 4.34 Skripsi
+  const rawScoresJuniSkripsi = [
+    { nip: '198406142009031007', c1: 5, c2: 5, c3: 5, c4: 5 }, // A1 Muhammad Rizky, S.Pd.I.
+    { nip: '198501152010011001', c1: 5, c2: 5, c3: 5, c4: 5 }, // A2 Ahmad Fauzi, S.Pd.
+    { nip: '198509172010021017', c1: 4, c2: 5, c3: 4, c4: 4 }, // A3 Bambang Hermanto, S.Pd.
+    { nip: '198612192010011011', c1: 4, c2: 4, c3: 4, c4: 4 }, // A4 Dedi Supriyadi, S.Pd.
+    { nip: '198703222011012002', c1: 5, c2: 5, c3: 5, c4: 5 }, // A5 Siti Nurhaliza, M.Pd.
+    { nip: '198708232011021013', c1: 5, c2: 4, c3: 5, c4: 4 }, // A6 Fajar Nugroho, S.Pd.
+    { nip: '198811112012011009', c1: 4, c2: 5, c3: 4, c4: 4 }, // A7 Agus Setiawan, S.Pd.
+    { nip: '198904102014021003', c1: 5, c2: 4, c3: 5, c4: 4 }, // A8 Budi Santoso, S.Si.
+    { nip: '198906202014012016', c1: 5, c2: 5, c3: 4, c4: 5 }, // A9 Fitriani, S.Pd.
+    { nip: '199005122015032004', c1: 4, c2: 5, c3: 4, c4: 5 }, // A10 Ratna Dewi, S.Pd.
+    { nip: '199009092015022010', c1: 4, c2: 4, c3: 4, c4: 4 }, // A11 Eka Putri Rahayu, S.E.
+    { nip: '199103052016021015', c1: 5, c2: 4, c3: 4, c4: 5 }, // A12 Yusuf Habibi, S.Pd.
+    { nip: '199108182016011005', c1: 5, c2: 5, c3: 5, c4: 4 }, // A13 Hendra Gunawan, S.Kom.
+    { nip: '199202022017042006', c1: 4, c2: 5, c3: 4, c4: 4 }, // A14 Dewi Sartika, M.Pd.
+    { nip: '199204152017032012', c1: 4, c2: 4, c3: 4, c4: 3 }, // A15 Rina Marlina, S.Sos.
+    { nip: '199307252018022008', c1: 5, c2: 4, c3: 4, c4: 4 }, // A16 Nurul Hidayah, S.Pd.
+    { nip: '199310082018032018', c1: 5, c2: 5, c3: 4, c4: 5 }, // A17 Dian Kusuma, S.Pd.
+    { nip: '199401302019012014', c1: 4, c2: 4, c3: 5, c4: 4 }, // A18 Maya Anggraini, S.Sn.
   ];
 
-  for (const s of rawScoresJuni) {
-    const guru = createdGurus[s.guruIndex];
+  for (const s of rawScoresJuniSkripsi) {
+    const guru = createdGurus.find(g => g.nip === s.nip)!;
     await prisma.penilaian.create({
       data: {
         guruId: guru.id,
