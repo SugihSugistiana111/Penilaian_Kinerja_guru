@@ -158,8 +158,8 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
           {[
             { key: 'A', label: 'A. Kriteria & Pembagi' },
             { key: 'B', label: 'B. Matriks Keputusan (X)' },
-            { key: 'C', label: 'C. Normalisasi (rij)' },
-            { key: 'D', label: 'D. Terbobot (vij)' },
+            { key: 'C', label: 'C. Normalisasi (X*)' },
+            { key: 'D', label: 'D. Terbobot (W × X*)' },
             { key: 'E', label: 'E. Optimasi (Yi)' },
             { key: 'F', label: 'F. Hasil Ranking' },
           ].map((tab) => (
@@ -260,15 +260,15 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
           </div>
         )}
 
-        {/* Tab C: Matriks Normalisasi (rij) */}
+        {/* Tab C: Matriks Ternormalisasi (X*) */}
         {activeTab === 'C' && (
           <div className="bg-white rounded-xl border border-hijau-muda overflow-hidden space-y-4 p-4">
             <div>
               <h3 className="font-semibold text-sm text-teks-utama">
-                C. Matriks Normalisasi (rij = xij / √∑xkj²)
+                C. Matriks Ternormalisasi (X* atau x*ij = xij / √∑xij²)
               </h3>
               <p className="text-xs text-teks-sekunder mt-0.5">
-                Setiap nilai elemen matriks keputusan dibagi dengan akar jumlah kuadrat kriteria
+                Setiap nilai elemen matriks keputusan dibagi dengan akar kuadrat dari jumlah kuadrat pada kriteria terkait
               </p>
             </div>
 
@@ -280,7 +280,7 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
                     <th className="py-2.5 px-3 min-w-[200px]">Nama Guru</th>
                     {kalkulasi.kriteriaList.map((k) => (
                       <th key={k.kode} className="py-2.5 px-3 text-center">
-                        r_{k.kode}
+                        {k.kode} ({k.bobot})
                       </th>
                     ))}
                   </tr>
@@ -303,15 +303,15 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
           </div>
         )}
 
-        {/* Tab D: Matriks Terbobot (vij) */}
+        {/* Tab D: Matriks Normalisasi Terbobot (W × X*) */}
         {activeTab === 'D' && (
           <div className="bg-white rounded-xl border border-hijau-muda overflow-hidden space-y-4 p-4">
             <div>
               <h3 className="font-semibold text-sm text-teks-utama">
-                D. Matriks Terbobot (vij = wj × rij)
+                D. Matriks Normalisasi Terbobot (W × X*)
               </h3>
               <p className="text-xs text-teks-sekunder mt-0.5">
-                Hasil perkalian nilai normalisasi dengan bobot kriteria masing-masing
+                Hasil perkalian nilai matriks ternormalisasi (X*) dengan bobot preferensi kriteria masing-masing (W)
               </p>
             </div>
 
@@ -323,7 +323,7 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
                     <th className="py-2.5 px-3 min-w-[200px]">Nama Guru</th>
                     {kalkulasi.kriteriaList.map((k) => (
                       <th key={k.kode} className="py-2.5 px-3 text-center">
-                        v_{k.kode} ({k.bobot * 100}%)
+                        {k.kode} ({k.bobot})
                       </th>
                     ))}
                   </tr>
