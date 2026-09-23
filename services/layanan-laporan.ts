@@ -36,6 +36,7 @@ export async function getLaporanPeriode(periodeId: string) {
       website: 'www.sma-alihsan.sch.id',
       kepalaSekolah: 'Dr. H. Mulyadi, M.Pd.',
       nipKepalaSekolah: '197508122000031002',
+      administrator: 'M. Hidad Abdillah, S.Pd.',
     },
     periode,
     kriteriaList,

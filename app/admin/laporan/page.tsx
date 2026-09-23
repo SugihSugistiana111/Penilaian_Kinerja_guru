@@ -305,7 +305,7 @@ export default function AdminLaporanPage() {
                 <strong>Administrator SPK</strong>
               </p>
               <div>
-                <p className="font-bold underline">Administrator SPK</p>
+                <p className="font-bold underline">M. Hidad Abdillah, S.Pd.</p>
                 <p className="text-[11px] text-teks-sekunder">SMA Al-Ihsan Boarding School</p>
               </div>
             </div>

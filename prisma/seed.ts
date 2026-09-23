@@ -342,7 +342,7 @@ async function main() {
   // Akun Admin
   await prisma.user.create({
     data: {
-      nama: 'Administrator SPK',
+      nama: 'M. Hidad Abdillah, S.Pd.',
       username: 'admin',
       password: passwordAdminHash,
       roleId: roleAdmin.id,
