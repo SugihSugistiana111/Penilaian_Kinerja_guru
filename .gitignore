@@ -38,7 +38,28 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 
-# Python cache & artifacts
+# Diagrams & Wireframes
+*.drawio
+*.drawio.*
+wireframes/
+db_screenshots/
+system_screenshots/
+
+# Thesis / Skripsi Documents & Notes (keep README.MD)
+*.docx
+*.doc
+*.pptx
+*.xlsx
+ACTIVITY_BAB4.md
+Activity.md
+Bab4_*.md
+SEQUENCE_BAB4.md
+USECASE_BAB4.md
+Usecase.md
+revisi.md
+
+# Python helper scripts & artifacts
+*.py
 __pycache__/
 *.py[cod]
 *$py.class
