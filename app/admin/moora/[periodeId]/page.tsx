@@ -264,11 +264,16 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
         {activeTab === 'C' && (
           <div className="bg-white rounded-xl border border-hijau-muda overflow-hidden space-y-4 p-4">
             <div>
-              <h3 className="font-semibold text-sm text-teks-utama">
-                C. Matriks Ternormalisasi (X* atau x*ij = xij / √∑xij²)
-              </h3>
-              <p className="text-xs text-teks-sekunder mt-0.5">
-                Setiap nilai elemen matriks keputusan dibagi dengan akar kuadrat dari jumlah kuadrat pada kriteria terkait
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h3 className="font-semibold text-sm text-teks-utama">
+                  C. Matriks Ternormalisasi (X*)
+                </h3>
+                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-hijau-soft border border-hijau-muda text-hijau-utama font-mono text-xs font-semibold">
+                  <span>x*<sub>ij</sub> = x<sub>ij</sub> / &radic;(&sum;<sub>i=1</sub><sup>m</sup> x<sub>ij</sub>&sup2;)</span>
+                </div>
+              </div>
+              <p className="text-xs text-teks-sekunder mt-1">
+                Normalisasi rasio vektor: setiap nilai elemen matriks awal dibagi akar kuadrat dari jumlah kuadrat seluruh alternatif pada kriteria terkait
               </p>
             </div>
 
@@ -307,10 +312,15 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
         {activeTab === 'D' && (
           <div className="bg-white rounded-xl border border-hijau-muda overflow-hidden space-y-4 p-4">
             <div>
-              <h3 className="font-semibold text-sm text-teks-utama">
-                D. Matriks Normalisasi Terbobot (W × X*)
-              </h3>
-              <p className="text-xs text-teks-sekunder mt-0.5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h3 className="font-semibold text-sm text-teks-utama">
+                  D. Matriks Normalisasi Terbobot (W &times; X*)
+                </h3>
+                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-hijau-soft border border-hijau-muda text-hijau-utama font-mono text-xs font-semibold">
+                  <span>(W &times; X*)<sub>ij</sub> = w<sub>j</sub> &times; x*<sub>ij</sub></span>
+                </div>
+              </div>
+              <p className="text-xs text-teks-sekunder mt-1">
                 Hasil perkalian nilai matriks ternormalisasi (X*) dengan bobot preferensi kriteria masing-masing (W)
               </p>
             </div>
@@ -350,11 +360,16 @@ export default function MooraDetailPage({ params }: { params: { periodeId: strin
         {activeTab === 'E' && (
           <div className="bg-white rounded-xl border border-hijau-muda overflow-hidden space-y-4 p-4">
             <div>
-              <h3 className="font-semibold text-sm text-teks-utama">
-                E. Nilai Optimasi Preferensi (Yi = ∑ Benefit - ∑ Cost)
-              </h3>
-              <p className="text-xs text-teks-sekunder mt-0.5">
-                Penjumlahan seluruh atribut terbobot kriteria benefit
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h3 className="font-semibold text-sm text-teks-utama">
+                  E. Nilai Optimasi Preferensi (Yi)
+                </h3>
+                <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-hijau-soft border border-hijau-muda text-hijau-utama font-mono text-xs font-semibold">
+                  <span>Y<sub>i</sub> = &sum;<sub>j=1</sub><sup>g</sup> w<sub>j</sub>x*<sub>ij</sub> &minus; &sum;<sub>j=g+1</sub><sup>n</sup> w<sub>j</sub>x*<sub>ij</sub></span>
+                </div>
+              </div>
+              <p className="text-xs text-teks-sekunder mt-1">
+                Penjumlahan seluruh atribut terbobot benefit dikurangi cost (keempat kriteria C1 s.d C4 bertipe BENEFIT)
               </p>
             </div>
 
